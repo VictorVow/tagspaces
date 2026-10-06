@@ -70,7 +70,11 @@ import {
 } from '-/services/secure-crypto';
 import { isAnotherTabOpen } from '-/services/credentialsTabGuard';
 import CredentialsPasswordSetupDialog from '-/components/dialogs/CredentialsPasswordSetupDialog';
-import { isWorkerAvailable, setLanguage } from '-/services/utils-io';
+import {
+  isWorkerAvailable,
+  setLanguage,
+  syncCloseToTray,
+} from '-/services/utils-io';
 import { TS } from '-/tagspaces.namespace';
 import { clearAllURLParams } from '-/utils/dom';
 import { getDarkThemes, getLightThemes } from '-/utils/Themes';
@@ -846,6 +850,27 @@ function SettingsGeneral({ searchInputRef }: Props = {}) {
             </ListItem>
           ),
         },
+        ...(AppConfig.isElectron
+          ? [
+              {
+                label: t('core:closeToTray'),
+                jsx: (
+                  <ListItem>
+                    <ListItemText primary={t('core:closeToTray')} />
+                    <TsSwitch
+                      data-tid="settingsSetCloseToTray"
+                      onClick={() => {
+                        const newValue = !settings.closeToTray;
+                        dispatch(SettingsActions.setCloseToTray(newValue));
+                        syncCloseToTray(newValue);
+                      }}
+                      checked={settings.closeToTray}
+                    />
+                  </ListItem>
+                ),
+              },
+            ]
+          : []),
         {
           label: t('core:reorderTags'),
           jsx: (
