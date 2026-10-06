@@ -56,6 +56,7 @@ export const types = {
   SET_CHECKFORUPDATES: 'SETTINGS/SET_CHECKFORUPDATES',
   SET_CLOSE_TO_TRAY: 'SETTINGS/SET_CLOSE_TO_TRAY',
   SET_REORDER_TAGS: 'SETTINGS/SET_REORDER_TAGS',
+  SET_PREVIEW_ON_MULTI_SELECT: 'SETTINGS/SET_PREVIEW_ON_MULTI_SELECT',
   SET_DEFAULTPERSPECTIVE: 'SETTINGS/SET_DEFAULTPERSPECTIVE',
   SET_USEDEFAULTLOCATION: 'SETTINGS/SET_USEDEFAULTLOCATION',
   SET_COLOREDFILEEXTENSION: 'SETTINGS/SET_COLOREDFILEEXTENSION',
@@ -266,6 +267,9 @@ export default (state: any = defaultSettings, action: any) => {
     }
     case types.SET_REORDER_TAGS: {
       return { ...state, reorderTags: action.reorderTags };
+    }
+    case types.SET_PREVIEW_ON_MULTI_SELECT: {
+      return { ...state, previewOnMultiSelect: action.previewOnMultiSelect };
     }
     case types.SET_USEDEFAULTLOCATION: {
       return { ...state, useDefaultLocation: action.useDefaultLocation };
@@ -805,6 +809,10 @@ export const actions = {
     type: types.SET_REORDER_TAGS,
     reorderTags,
   }),
+  setPreviewOnMultiSelect: (previewOnMultiSelect: boolean) => ({
+    type: types.SET_PREVIEW_ON_MULTI_SELECT,
+    previewOnMultiSelect,
+  }),
   setLanguage: (language: string) => ({
     type: types.SET_LANGUAGE,
     language,
@@ -1156,6 +1164,8 @@ export const isAutoSaveDescription = (state: any) =>
 export const isRevisionsEnabled = (state: any) =>
   state.settings.isRevisionsEnabled;
 export const isReorderTags = (state: any) => state.settings.reorderTags;
+export const isPreviewOnMultiSelect = (state: any) =>
+  state.settings.previewOnMultiSelect;
 export const getDefaultAIProvider = (state: any) => {
   if (typeof AppConfig.ExtAI === 'undefined') {
     return getDefaultAI(

@@ -36,7 +36,10 @@ import {
   folderOperationsEnabled,
 } from '-/perspectives/common/main-container';
 import { useSortedDirContext } from '-/perspectives/grid/hooks/useSortedDirContext';
-import { getEntryContainerTab } from '-/reducers/settings';
+import {
+  getEntryContainerTab,
+  isPreviewOnMultiSelect,
+} from '-/reducers/settings';
 import i18n from '-/services/i18n';
 import { TS } from '-/tagspaces.namespace';
 import DragHandleIcon from '@mui/icons-material/DragHandleOutlined';
@@ -105,6 +108,7 @@ function CellView(props: Props) {
   const { sortedDirContent, nativeDragModeEnabled } = useSortedDirContext();
   const { showNotification } = useNotificationContext();
   const selectedTabName = useSelector(getEntryContainerTab);
+  const previewOnMultiSelect = useSelector(isPreviewOnMultiSelect);
 
   if (!fsEntry || (!fsEntry.isFile && !showDirectories)) {
     return null;
@@ -211,6 +215,13 @@ function CellView(props: Props) {
         ); // deselect selected entry
       } else {
         setSelectedEntries([...selectedEntries, fsEntry]);
+        if (
+          previewOnMultiSelect &&
+          fsEntry.isFile &&
+          singleClickAction === 'openInternal'
+        ) {
+          openEntryInternal(fsEntry);
+        }
       }
     } else {
       setSelectedEntries([fsEntry]);

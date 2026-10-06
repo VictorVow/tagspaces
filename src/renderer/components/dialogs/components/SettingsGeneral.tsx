@@ -894,6 +894,25 @@ function SettingsGeneral({ searchInputRef }: Props = {}) {
           ),
         },
         {
+          label: t('core:previewOnMultiSelect'),
+          jsx: (
+            <ListItem>
+              <ListItemText primary={t('core:previewOnMultiSelect')} />
+              <TsSwitch
+                data-tid="previewOnMultiSelectTID"
+                onClick={() =>
+                  dispatch(
+                    SettingsActions.setPreviewOnMultiSelect(
+                      !settings.previewOnMultiSelect,
+                    ),
+                  )
+                }
+                checked={settings.previewOnMultiSelect}
+              />
+            </ListItem>
+          ),
+        },
+        {
           label: t('core:addTagsToLibrary'),
           jsx: (
             <ListItem>

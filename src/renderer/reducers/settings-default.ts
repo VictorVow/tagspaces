@@ -81,6 +81,7 @@ export default {
   checkForUpdates,
   closeToTray: false,
   reorderTags: false,
+  previewOnMultiSelect: false,
   coloredFileExtension: false,
   loadsLocationMetaData: false,
   searchInSubfolders: true,
