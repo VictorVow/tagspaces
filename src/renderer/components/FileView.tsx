@@ -282,7 +282,9 @@ function FileView(props: Props) {
         </Box>
       )}
       {/* Note: allow-same-origin + allow-scripts is intentional — viewers are
-          trusted same-origin extensions that require direct app access. */}
+          trusted same-origin extensions that require direct app access.
+          clipboard-write uses * because 'src' never matches the opaque
+          origin of file:// viewers, which blocks navigator.clipboard.write. */}
       <iframe
         ref={fileViewer}
         style={{
@@ -291,7 +293,7 @@ function FileView(props: Props) {
           zIndex: 3,
           border: 0,
         }}
-        allow="clipboard-write 'src'; fullscreen 'src'; camera 'none'; microphone 'none'; geolocation 'none'; payment 'none'"
+        allow="clipboard-write *; fullscreen 'src'; camera 'none'; microphone 'none'; geolocation 'none'; payment 'none'"
         referrerPolicy="no-referrer"
         src={fileOpenerURL}
         sandbox="allow-same-origin allow-scripts allow-modals allow-downloads"
